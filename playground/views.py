@@ -1,10 +1,9 @@
 from django.shortcuts import render
-from django.core.exceptions import ObjectDoesNotExist
-from store.models import Product
+
+from store.models import Customer
 
 
 def say_hello(request):
+     customer = Customer.objects.filter(first_name__icontains = "a")
     
-    querysete = Product.objects.filter(unit_price__range=(20 , 30))
-    
-    return render(request , 'hello.html' , {'name' : 'Arash' , 'products' : list(queryset)})
+     return render(request , 'hello.html' , {'name' : 'Arash' ,'customers': list(customer)})
