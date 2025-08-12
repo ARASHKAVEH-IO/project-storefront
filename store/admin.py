@@ -8,5 +8,19 @@ class CustomerAdmin(admin.ModelAdmin):
     ordering = ['first_name' , 'last_name']
     list_per_page = 5
 
+@admin.register(models.Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ['title' , 'unit_price' , 'inventory_status']
+    list_editable = ['unit_price']
+    ordering = ['title']
+    list_per_page = 10
 
+    @admin.display(ordering = 'inventory')
+    def inventory_status(self , product):
+        if product.inventory < 75:
+            return 'LOW'
+        return 'OK'
+        
+    
+    
 
