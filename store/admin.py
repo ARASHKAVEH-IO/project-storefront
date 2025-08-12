@@ -1,7 +1,10 @@
 from django.contrib import admin 
+from django.contrib.contenttypes.admin import GenericTabularInline
 from . import models
 from django.urls import reverse
 from django.db.models import QuerySet
+from tags.models import TaggedItem
+
 
 
 class InventoryFilter(admin.SimpleListFilter):
@@ -28,8 +31,15 @@ class CustomerAdmin(admin.ModelAdmin):
 
 #--------------------------------------------------------------
 
+class TagInLine(GenericTabularInline):
+    autocomplete_fields = ['tag']
+    model = TaggedItem
+
+
+
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
+    inlines = [TagInLine]
     prepopulated_fields = {
         'slug' : ['title']
     }
